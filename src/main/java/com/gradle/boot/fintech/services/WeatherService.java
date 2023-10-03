@@ -5,6 +5,7 @@ import com.gradle.boot.fintech.exceptions.RegionNotCreatedException;
 import com.gradle.boot.fintech.exceptions.RegionNotFoundException;
 import com.gradle.boot.fintech.exceptions.TemperatureNotFoundException;
 import com.gradle.boot.fintech.models.Weather;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +13,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class WeatherService {
     private final WeatherDAO weatherDAO;
-    @Autowired
-    public WeatherService(WeatherDAO weatherDAO) {
-        this.weatherDAO = weatherDAO;
-    }
     public void save(int regionId, Weather weather) {
         if (weatherDAO.isContainsByKey(regionId))
             throw new RegionNotCreatedException("Region already exists");
