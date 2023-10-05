@@ -1,41 +1,46 @@
 plugins {
-    application
+	java
+	id("org.springframework.boot") version "3.1.4"
+	id("io.spring.dependency-management") version "1.1.3"
+}
+
+group = "com.gradle.boot"
+version = "0.0.1-SNAPSHOT"
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_17
+}
+
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
-    compileOnly("org.projectlombok:lombok:1.18.28")
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    implementation("com.google.guava:guava:32.1.1-jre")
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	compileOnly("org.projectlombok:lombok")
+	annotationProcessor("org.projectlombok:lombok")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 tasks.register<Jar>("fatJar") {
-    manifest {
-        attributes("Main-Class" to "com.gradle.fintech.App")
-    }
-    archiveClassifier.set("fat")
+	manifest {
+		attributes("Main-Class" to "com.gradle.boot.fintech.FintechApplication")
+	}
+	archiveClassifier.set("fat")
 
-    from(sourceSets.main.get().output)
+	from(sourceSets.main.get().output)
 
-    dependsOn(configurations.runtimeClasspath)
-    from({
-        configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-    })
+	dependsOn(configurations.runtimeClasspath)
+	from({
+		configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
+	})
 }
-application {
-    mainClass.set("com.gradle.fintech.App")
-}
-
-tasks.named<Test>("test") {
-    useJUnitPlatform()
+tasks.withType<Test> {
+	useJUnitPlatform()
 }
