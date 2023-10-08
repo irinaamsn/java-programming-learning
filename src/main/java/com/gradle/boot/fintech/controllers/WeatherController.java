@@ -6,65 +6,64 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name="Погода", description="Содержит CRUD методы, которые изменяют список с погодой и регионами")
+@Tag(name="Weather", description="Contains CRUD methods that modify the list with weather and regions")
 @RestController
 @RequestMapping("/api/weather/{city}")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class WeatherController {
     private final WeatherService weatherService;
     @Operation(
-            summary = "Получение температуры по региону",
-            description = "Позволяет получить температуру по региону и текущей дате"
+            summary = "Getting the temperature by region",
+            description = "Allows you to get the temperature by region and the current date"
     )
-    @ApiResponse(responseCode = "200", description = "Запрос был успешно выполнен")
-    @ApiResponse(responseCode = "404", description = "Заданный регион не был найден/Температура не была найдена")
-    @ApiResponse(responseCode = "500", description = "Внутрення ошибка сервера")
+    @ApiResponse(responseCode = "200", description = "The request was successfully executed")
+    @ApiResponse(responseCode = "404", description = "The specified region was not found/The temperature was not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     @GetMapping
-    public ResponseEntity<Double> getTemperatureByCity(@PathVariable(name = "city") @Parameter(description = "Идентификатор региона") int regionId) {
+    public ResponseEntity<Double> getTemperatureByCity(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionId) {
         return ResponseEntity.ok(weatherService.getTempByRegionId(regionId));
     }
     @Operation(
-            summary = "Добавление нового региона",
-            description = "Добавляет новый регион в список со всей информацией о погоде"
+            summary = "Adding a new region",
+            description = "Adds a new region to the list with all the weather information"
     )
     @ApiResponse(responseCode = "201", description = "Регион был успешно создан")
-    @ApiResponse(responseCode = "400", description = "Заданный регион уже существует")
-    @ApiResponse(responseCode = "500", description = "Внутрення ошибка сервера")
+    @ApiResponse(responseCode = "400", description = "The specified region already exists")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     @PostMapping
-    public ResponseEntity<String> addRegion(@PathVariable(name = "city") @Parameter(description = "Идентификатор региона") int regionId,
+    public ResponseEntity<String> addRegion(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionId,
                                             @RequestBody Weather weather) {
         weatherService.save(regionId,weather);
         return new ResponseEntity<>("Weather record with a new region added", HttpStatus.CREATED);
     }
     @Operation(
-            summary = "Обновляет погоду по региону",
-            description = "Обновляет данные о погоде по региону или добавляет новую запись"
+            summary = "Updates the weather by region",
+            description = "Updates weather data by region or adds a new record"
     )
-    @ApiResponse(responseCode = "200", description = "Запрос был успешно выполнен")
-    @ApiResponse(responseCode = "404", description = "Заданный регион не был найден")
-    @ApiResponse(responseCode = "500", description = "Внутрення ошибка сервера")
+    @ApiResponse(responseCode = "200", description = "The request was successfully executed")
+    @ApiResponse(responseCode = "404", description = "The specified region was not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     @PutMapping
-    public ResponseEntity<String> updateWeather(@PathVariable(name = "city") @Parameter(description = "Идентификатор региона") int regionId,
+    public ResponseEntity<String> updateWeather(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionId,
                                                 @RequestBody Weather updatedWeather) {
         weatherService.update(regionId,updatedWeather);
         return ResponseEntity.ok("The weather in the region has been updated");
     }
     @Operation(
-            summary = "Удаляет регион",
-            description = "Удаляет регион со всеми записями о погоде"
+            summary = "Deletes a region",
+            description = "Deletes a region with all weather records"
     )
-    @ApiResponse(responseCode = "200", description = "Запрос был успешно выполнен")
-    @ApiResponse(responseCode = "404", description = "Заданный регион не был найден")
-    @ApiResponse(responseCode = "500", description = "Внутрення ошибка сервера")
+    @ApiResponse(responseCode = "200", description = "The request was successfully executed")
+    @ApiResponse(responseCode = "404", description = "The specified region was not found")
+    @ApiResponse(responseCode = "500", description = "Internal server error")
     @DeleteMapping
-    public ResponseEntity<String> deleteRegion(@PathVariable(name = "city") @Parameter(description = "Идентификатор региона") int regionId) {
-       weatherService.delete(regionId);
-       return new ResponseEntity<>("The Region has been deleted",HttpStatus.OK);
+    public ResponseEntity<String> deleteRegion(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionId) {
+        weatherService.delete(regionId);
+        return new ResponseEntity<>("The Region has been deleted",HttpStatus.OK);
     }
 }
