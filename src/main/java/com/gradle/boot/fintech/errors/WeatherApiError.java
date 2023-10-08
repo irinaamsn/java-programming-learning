@@ -1,4 +1,4 @@
-package com.gradle.boot.fintech.exceptions.error;
+package com.gradle.boot.fintech.errors;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.*;

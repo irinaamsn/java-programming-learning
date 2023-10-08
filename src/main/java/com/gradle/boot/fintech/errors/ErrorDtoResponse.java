@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ErrorResponse {
+public class ErrorDtoResponse {
     private int status;
     private String message;
-    private long timestamp;
 }

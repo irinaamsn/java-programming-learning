@@ -2,7 +2,7 @@ package com.gradle.boot.fintech.exceptions;
 
 import com.gradle.boot.fintech.exceptions.base.GlobalWeatherException;
 import com.gradle.boot.fintech.exceptions.base.WeatherApiException;
-import com.gradle.boot.fintech.exceptions.error.ErrorDtoResponse;
+import com.gradle.boot.fintech.errors.ErrorDtoResponse;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

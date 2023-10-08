@@ -1,6 +1,6 @@
 package com.gradle.boot.fintech.exceptions;
 
-import com.gradle.boot.fintech.exceptions.error.WeatherApiError;
+import com.gradle.boot.fintech.errors.WeatherApiError;
 import com.gradle.boot.fintech.exceptions.weatherapi.IncorrectApiKeyException;
 import com.gradle.boot.fintech.exceptions.weatherapi.IncorrectQueryException;
 import com.gradle.boot.fintech.exceptions.weatherapi.IncorrectUrlAddressException;
