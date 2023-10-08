@@ -22,9 +22,12 @@ repositories {
 }
 
 dependencies {
-
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("io.github.resilience4j:resilience4j-spring-boot3:2.0.2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
