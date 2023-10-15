@@ -1,6 +1,7 @@
 package com.gradle.boot.fintech.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,21 +9,16 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Weather {
-    @Schema(description = "Идентификатор региона")
+    @Schema(description = "Region ID")
     private int regionId;
-    @Schema(description = "Название региона", example = "Московская область")
+    @Schema(description = "Name of the region", example = "Moscow oblast")
     private String regionName;
-    @Schema(description = "Температура")
+    @Schema(description = "Temperature")
     private double valueTemp;
-    @Schema(description = "Дата и время")
+    @Schema(description = "Date and time")
     private LocalDateTime dateTime;
-    public Weather(int regionId,String regionName, double valueTemp, LocalDateTime dateTime) {
-        this.regionId=regionId;
-        this.regionName = regionName;
-        this.valueTemp = valueTemp;
-        this.dateTime = dateTime;
-    }
 
     @Override
     public String toString() {
