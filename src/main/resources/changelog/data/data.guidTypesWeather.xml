@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="231010fill-guid-data" author="irina.msn">
+        <insert tableName="Weather_Type">
+            <column name="name" value="дождь"/>
+        </insert>
+        <insert tableName="Weather_Type">
+            <column name="name" value="снег"/>
+        </insert>
+        <insert tableName="Weather_Type">
+            <column name="name" value="солнце"/>
+        </insert>
+        <insert tableName="Weather_Type">
+            <column name="name" value="туман"/>
+        </insert>
+        <insert tableName="Weather_Type">
+            <column name="name" value="ветер"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

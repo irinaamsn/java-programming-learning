@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="20231010create-weather-table" author="irina.msn">
+        <createTable tableName="Weather">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="region_code" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="temperature" type="DOUBLE">
+                <constraints nullable="false" />
+            </column>
+            <column name="date" type="DATE">
+                <constraints nullable="false" />
+            </column>
+            <column name="time" type="TIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="region_Id" type="bigint">
+                <constraints nullable="true" foreignKeyName="region_Id" referencedTableName="Region"
+                referencedColumnNames="id" />
+            </column>
+            <column name="type_Id" type="bigint">
+                <constraints nullable="true" foreignKeyName="type_Id" referencedTableName="Weather_Type"
+                referencedColumnNames="id"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>
