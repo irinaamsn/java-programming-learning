@@ -22,9 +22,10 @@ public class WeatherServiceImpl implements WeatherService {
     private final WeatherRepository weatherRepository;
     private final WeatherTypeRepository weatherTypeRepository;
     private final RegionRepository regionRepository;
-    public WeatherServiceImpl(@Qualifier("weatherJpaRepository")WeatherRepository weatherRepository,
-                              @Qualifier("weatherTypeJpaRepository")WeatherTypeRepository weatherTypeRepository,
-                              @Qualifier("regionJpaRepository")RegionRepository regionRepository) {
+
+    public WeatherServiceImpl(@Qualifier("weatherJpaRepository") WeatherRepository weatherRepository,
+                              @Qualifier("weatherTypeJpaRepository") WeatherTypeRepository weatherTypeRepository,
+                              @Qualifier("regionJpaRepository") RegionRepository regionRepository) {
         this.weatherRepository = weatherRepository;
         this.weatherTypeRepository = weatherTypeRepository;
         this.regionRepository = regionRepository;
@@ -34,50 +35,55 @@ public class WeatherServiceImpl implements WeatherService {
     @Transactional
     public void save(int regionCode, Weather weather) {
         if (weatherRepository.existsByRegionCode(regionCode))
-            throw new NotCreatedException(HttpStatus.BAD_REQUEST,"Region already exists", System.currentTimeMillis());
+            throw new NotCreatedException(HttpStatus.BAD_REQUEST, "Region already exists", System.currentTimeMillis());
 
-        Optional<WeatherType> weatherType=weatherTypeRepository.findByName(weather.getTypeName());
+        Optional<WeatherType> weatherType = weatherTypeRepository.findByName(weather.getTypeName());
         if (weatherType.isPresent()) weather.setWeatherType(weatherType.get());
-        else throw new NotFoundException(HttpStatus.NOT_FOUND, "The type of weather was not found",System.currentTimeMillis());
+        else
+            throw new NotFoundException(HttpStatus.NOT_FOUND, "The type of weather was not found", System.currentTimeMillis());
 
-        Optional<Region> region=regionRepository.findByCode(regionCode);
+        Optional<Region> region = regionRepository.findByCode(regionCode);
         if (region.isPresent()) weather.setRegion(region.get());
-        else throw new NotFoundException(HttpStatus.NOT_FOUND,"Region not found",System.currentTimeMillis());
+        else throw new NotFoundException(HttpStatus.NOT_FOUND, "Region not found", System.currentTimeMillis());
 
         weatherRepository.addWeather(weather);
     }
+
     @Override
     @Transactional
     public void update(int regionCode, Weather weather) {
         if (!weatherRepository.existsByRegionCode(regionCode))
-            throw new NotFoundException(HttpStatus.NOT_FOUND,"Region not found", System.currentTimeMillis());
+            throw new NotFoundException(HttpStatus.NOT_FOUND, "Region not found", System.currentTimeMillis());
 
-        if (weatherRepository.existsByRegionCodeAndDate(regionCode,weather.getDate()))
-            weatherRepository.updateByRegionCode(regionCode,weather.getDate(),weather.getTemperature(),weather.getTypeName());
+        if (weatherRepository.existsByRegionCodeAndDate(regionCode, weather.getDate()))
+            weatherRepository.updateByRegionCode(regionCode, weather.getDate(), weather.getTemperature(), weather.getTypeName());
         else {
-            Optional<WeatherType> weatherType=weatherTypeRepository.findByName(weather.getTypeName());
+            Optional<WeatherType> weatherType = weatherTypeRepository.findByName(weather.getTypeName());
             if (weatherType.isPresent()) weather.setWeatherType(weatherType.get());
-            else throw new NotFoundException(HttpStatus.NOT_FOUND, "The type of weather was not found",System.currentTimeMillis());
+            else
+                throw new NotFoundException(HttpStatus.NOT_FOUND, "The type of weather was not found", System.currentTimeMillis());
 
             weather.setRegion(regionRepository.findByCode(regionCode).get());
             weatherRepository.addWeather(weather);
         }
     }
+
     @Override
-    public Double getTempByRegionId(int regionCode){
+    public Double getTempByRegionId(int regionCode) {
         if (weatherRepository.existsByRegionCode(regionCode)) {
-            Optional<Double> temperature= weatherRepository.getTemperatureByRegionCodeAndDate(regionCode);
+            Optional<Double> temperature = weatherRepository.getTemperatureByRegionCodeAndDate(regionCode);
             if (temperature.isPresent())
                 return temperature.get();
-            throw new NotFoundException(HttpStatus.NOT_FOUND,"Temperature not found", System.currentTimeMillis());
+            throw new NotFoundException(HttpStatus.NOT_FOUND, "Temperature not found", System.currentTimeMillis());
         }
-        throw new NotFoundException(HttpStatus.NOT_FOUND,"Region not found", System.currentTimeMillis());
+        throw new NotFoundException(HttpStatus.NOT_FOUND, "Region not found", System.currentTimeMillis());
     }
+
     @Override
     @Transactional
     public void delete(int regionCode) {
-        if(weatherRepository.existsByRegionCode(regionCode))
+        if (weatherRepository.existsByRegionCode(regionCode))
             weatherRepository.deleteByRegionCode(regionCode);
-        else throw new NotFoundException(HttpStatus.NOT_FOUND,"Region not found",System.currentTimeMillis());
+        else throw new NotFoundException(HttpStatus.NOT_FOUND, "Region not found", System.currentTimeMillis());
     }
 }

@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+
 @Repository("weatherTypeJpaRepository")
-public interface WeatherTypeRepositoryJpaImpl extends JpaRepository<WeatherType,Long>, WeatherTypeRepository {
+public interface WeatherTypeRepositoryJpaImpl extends JpaRepository<WeatherType, Long>, WeatherTypeRepository {
     Optional<WeatherType> findByName(String name);
 }

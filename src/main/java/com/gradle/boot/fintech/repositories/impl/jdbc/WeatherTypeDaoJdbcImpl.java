@@ -15,8 +15,9 @@ public class WeatherTypeDaoJdbcImpl implements WeatherTypeRepository {
     public WeatherTypeDaoJdbcImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public Optional<WeatherType> findByName(String name){
-        var result= jdbcTemplate.query("SELECT * FROM Weather_Type WHERE name=?",
+
+    public Optional<WeatherType> findByName(String name) {
+        var result = jdbcTemplate.query("SELECT * FROM Weather_Type WHERE name=?",
                 new Object[]{name},
                 new BeanPropertyRowMapper<>(WeatherType.class));
         return result.stream().findFirst();

@@ -15,8 +15,9 @@ public class RegionDaoJdbcImpl implements RegionRepository {
     public RegionDaoJdbcImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public Optional<Region> findByCode(int code){
-        var result= jdbcTemplate.query("SELECT * FROM Region WHERE code=?",
+
+    public Optional<Region> findByCode(int code) {
+        var result = jdbcTemplate.query("SELECT * FROM Region WHERE code=?",
                 new Object[]{code},
                 new BeanPropertyRowMapper<>(Region.class));
         return result.stream().findFirst();
