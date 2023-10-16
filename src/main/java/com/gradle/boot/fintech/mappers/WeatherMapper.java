@@ -8,7 +8,7 @@ import org.mapstruct.MappingConstants;
 
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
-        injectionStrategy = InjectionStrategy.FIELD)
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface WeatherMapper {
     Weather ToWeather(WeatherDto weatherDto);
 }
