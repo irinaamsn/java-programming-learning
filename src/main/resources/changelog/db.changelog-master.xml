@@ -3,9 +3,10 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <include file="changelog/entities/region.xml" />
+    <include file="changelog/entities/city.xml" />
     <include file="changelog/entities/guidTypesOfWeather.xml" />
     <include file="changelog/entities/weather.xml" />
-    <include file="changelog/data/data.region.xml"/>
+    <include file="changelog/data/data.city.xml"/>
     <include file="changelog/data/data.guidTypesWeather.xml"/>
+    <include file="changelog/index/weather-index.xml"/>
 </databaseChangeLog>
