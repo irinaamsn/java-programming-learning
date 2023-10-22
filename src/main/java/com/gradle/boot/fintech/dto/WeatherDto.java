@@ -15,12 +15,9 @@ import java.time.LocalTime;
 @Getter
 @Setter
 public class WeatherDto {
-
-    @Schema(description = "Код региона")
-    private int regionCode;
-
-    @Schema(description = "Название региона", example = "Московская область")
-    private String regionName;
+    
+    @Schema(description = "Название города")
+    private String cityName;
 
     @Schema(description = "Температура")
     private double temperature;

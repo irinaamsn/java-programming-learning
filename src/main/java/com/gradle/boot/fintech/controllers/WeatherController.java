@@ -1,5 +1,6 @@
 package com.gradle.boot.fintech.controllers;
 
+import com.gradle.boot.fintech.client.RestWeatherAPIClient;
 import com.gradle.boot.fintech.dto.WeatherDto;
 import com.gradle.boot.fintech.mappers.WeatherMapper;
 import com.gradle.boot.fintech.services.WeatherService;
@@ -12,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Weather", description = "Contains CRUD methods that modify the list with weather and regions")
+@Tag(name = "Weather", description = "Contains CRUD methods that modify the list with weather and cities")
 @RestController
 @RequestMapping("/api/weather/{city}")
 @RequiredArgsConstructor
@@ -21,56 +22,56 @@ public class WeatherController {
     private final WeatherMapper weatherMapper;
 
     @Operation(
-            summary = "Getting the temperature by region",
-            description = "Allows you to get the temperature by region and the current date"
+            summary = "Getting the temperature by city",
+            description = "Allows you to get the temperature by city and the current date"
     )
     @ApiResponse(responseCode = "200", description = "The request was successfully executed")
-    @ApiResponse(responseCode = "404", description = "The specified region was not found/The temperature was not found")
+    @ApiResponse(responseCode = "404", description = "The specified city was not found/The temperature was not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     @GetMapping
-    public ResponseEntity<Double> getTemperatureByCity(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionId) {
-        return ResponseEntity.ok(weatherService.getTempByRegionId(regionId));
+    public ResponseEntity<Double> getTemperatureByCity(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName) {
+        return ResponseEntity.ok(weatherService.getTempByRegionId(cityName));
     }
 
     @Operation(
-            summary = "Adding a new region",
-            description = "Adds a new region to the list with all the weather information"
+            summary = "Adding a new city",
+            description = "Adds a new city to the list with all the weather information"
     )
-    @ApiResponse(responseCode = "201", description = "The region was successfully created")
-    @ApiResponse(responseCode = "400", description = "The specified region already exists")
-    @ApiResponse(responseCode = "404", description = "The specified region was not found/The type of weather was not found")
+    @ApiResponse(responseCode = "201", description = "The city was successfully created")
+    @ApiResponse(responseCode = "400", description = "The specified city already exists")
+    @ApiResponse(responseCode = "404", description = "The specified city was not found/The type of weather was not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     @PostMapping
-    public ResponseEntity<String> addRegion(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionCode,
-                                            @RequestBody WeatherDto weatherDto) {
-        weatherService.save(regionCode, weatherMapper.ToWeather(weatherDto));
-        return new ResponseEntity<>("Weather record with a new region added", HttpStatus.CREATED);
+    public ResponseEntity<String> addCity(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName,
+                                          @RequestBody WeatherDto weatherDto) {
+        weatherService.save(cityName, weatherMapper.ToWeather(weatherDto));
+        return new ResponseEntity<>("Weather record with a new city added", HttpStatus.CREATED);
     }
 
     @Operation(
-            summary = "Updates the weather by region",
-            description = "Updates weather data by region or adds a new record"
+            summary = "Updates the weather by city",
+            description = "Updates weather data by city or adds a new record"
     )
     @ApiResponse(responseCode = "200", description = "The request was successfully executed")
-    @ApiResponse(responseCode = "404", description = "The specified region was not found/The type of weather was not found")
+    @ApiResponse(responseCode = "404", description = "The specified city was not found/The type of weather was not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     @PutMapping
-    public ResponseEntity<String> updateWeather(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionCode,
+    public ResponseEntity<String> updateWeather(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName,
                                                 @RequestBody WeatherDto weatherDto) {
-        weatherService.update(regionCode, weatherMapper.ToWeather(weatherDto));
-        return ResponseEntity.ok("The weather in the region has been updated");
+        weatherService.update(cityName, weatherMapper.ToWeather(weatherDto));
+        return ResponseEntity.ok("The weather in the city has been updated");
     }
 
     @Operation(
-            summary = "Deletes a region",
-            description = "Deletes a region with all weather records"
+            summary = "Deletes a city",
+            description = "Deletes a city with all weather records"
     )
     @ApiResponse(responseCode = "200", description = "The request was successfully executed")
-    @ApiResponse(responseCode = "404", description = "The specified region was not found")
+    @ApiResponse(responseCode = "404", description = "The specified city was not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     @DeleteMapping
-    public ResponseEntity<String> deleteRegion(@PathVariable(name = "city") @Parameter(description = "Region ID") int regionCode) {
-        weatherService.delete(regionCode);
-        return new ResponseEntity<>("The Region has been deleted", HttpStatus.OK);
+    public ResponseEntity<String> deleteCity(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName) {
+        weatherService.delete(cityName);
+        return new ResponseEntity<>("The City has been deleted", HttpStatus.OK);
     }
 }
