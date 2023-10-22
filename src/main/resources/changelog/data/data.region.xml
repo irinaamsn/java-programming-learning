@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="231010fill-region-data" author="irina.msn">
+        <insert tableName="Region">
+            <column name="code" value="50"/>
+            <column name="name" value="Московская область"/>
+        </insert>
+        <insert tableName="Region">
+            <column name="code" value="69"/>
+            <column name="name" value="Тверская область"/>
+        </insert>
+        <insert tableName="Region">
+            <column name="code" value="33"/>
+            <column name="name" value="Владимирская область"/>
+        </insert>
+        <insert tableName="Region">
+            <column name="code" value="70"/>
+            <column name="name" value="Томская область"/>
+        </insert>
+        <insert tableName="Region">
+            <column name="code" value="41"/>
+            <column name="name" value="Камчатский край"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

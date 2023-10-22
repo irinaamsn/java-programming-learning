@@ -8,8 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfig {
-    @Bean
-    @Qualifier("weatherApiRestTemplate")
+    @Bean(name = "weatherApiRestTemplate")
     public RestTemplate weatherApiRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler());
