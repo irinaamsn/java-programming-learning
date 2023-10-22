@@ -47,11 +47,11 @@ public class WeatherDaoJdbcImpl implements WeatherRepository {
                 weather.getCity().getId(), weather.getWeatherType().getId());
     }
 
-    public void updateByCityName(String cityName, LocalDate date, Double temperature, String typeName) {//todo bad request
-        jdbcTemplate.update("UPDATE Weather w SET w.temperature=?, w.type_id=(SELECT id FROM Weather_Type WHERE name =?) " +
+    public void updateByCityName(String cityName, LocalDate date, Double temperature) {
+        jdbcTemplate.update("UPDATE Weather w SET w.temperature=? " +
                         "WHERE w.city_id IN (SELECT id FROM City WHERE name =?) AND " +
                         "w.date=?",
-                temperature, typeName, cityName, date);
+                temperature, cityName, date);
     }
 
     public void deleteByCityName(String cityName) {

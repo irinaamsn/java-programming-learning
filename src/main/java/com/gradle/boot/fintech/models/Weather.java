@@ -19,14 +19,8 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Transient
-    private String cityName;
-
     @Column(name = "temperature", nullable = false)
     private Double temperature;
-
-    @Transient
-    private String typeName;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -42,10 +36,8 @@ public class Weather {
     @JoinColumn(name = "type_id", referencedColumnName = "id")
     private WeatherType weatherType;
 
-    public Weather(String regionName, Double temperature, String typeName, LocalDate date, LocalTime time) {
-        this.cityName = regionName;
+    public Weather(Double temperature, LocalDate date, LocalTime time) {
         this.temperature = temperature;
-        this.typeName = typeName;
         this.date = date;
         this.time = time;
     }

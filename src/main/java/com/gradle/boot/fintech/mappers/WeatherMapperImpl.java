@@ -13,26 +13,9 @@ public class WeatherMapperImpl implements WeatherMapper {
     @Override
     public Weather ToWeather(WeatherDto weatherDto) {
         Weather weather = new Weather();
-        weather.setCityName(weatherDto.getCityName());
-        weather.setTypeName(weatherDto.getTypeName());
         weather.setDate(weatherDto.getDate());
         weather.setTime(weatherDto.getTime());
         weather.setTemperature(weatherDto.getTemperature());
-        return weather;
-    }
-
-    @Override
-    public Weather ToWeather(WeatherApiResponseDto weatherApiResponse) {
-        Weather weather = new Weather();
-        weather.setCityName(weatherApiResponse.getLocation().getCityName());
-        weather.setTypeName(weatherApiResponse.getCurrent().getCondition().getTypeName());
-        weather.setTemperature(weatherApiResponse.getCurrent().getTemperature());
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(weatherApiResponse.getLocation().getDateTime(), formatter);//todo
-
-        weather.setDate(dateTime.toLocalDate());
-        weather.setTime(dateTime.toLocalTime());
         return weather;
     }
 

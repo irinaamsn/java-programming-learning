@@ -8,7 +8,5 @@ import com.gradle.boot.fintech.models.Weather;
 public interface WeatherMapper {
     Weather ToWeather(WeatherDto weatherDto);
 
-    Weather ToWeather(WeatherApiResponseDto weatherApiResponse);
-
     WeatherDto ToWeatherDto(WeatherApiResponseDto body);
 }

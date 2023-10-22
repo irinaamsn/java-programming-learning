@@ -15,20 +15,22 @@ import java.util.Optional;
 @Repository
 @Profile("weatherJpaRepository")
 public interface WeatherRepositoryJpaImpl extends JpaRepository<Weather, Long>, WeatherRepository {
+    @Query("select case when COUNT(w) > 0 then true else false end from Weather w where w.city.name = :cityName")
     boolean existsByCityName(String cityName);
 
-    @Query("select w.temperature from Weather w where w.cityName= :cityName and w.date= CURRENT_DATE")
+    @Query("select w.temperature from Weather w where w.city.name= :cityName and w.date= CURRENT_DATE")
     Optional<Double> getTemperatureByCityNameAndDate(@Param("cityName") String cityName);
 
+    @Query("select case when COUNT(w) > 0 then true else false end from Weather w where w.city.name = :cityName AND w.date = :date")
     boolean existsByCityNameAndDate(String cityName, LocalDate date);
 
     @Modifying
-    @Query("update Weather set temperature= :temperature, typeName= :typeName where cityName= :cityName and date= :date")
+    @Query("update Weather w set w.temperature= :temperature where w.city.name= :cityName and w.date= :date")
     void updateByCityName(@Param("cityName") String cityName, @Param("date") LocalDate date,
-                          @Param("temperature") Double temperature, @Param("typeName") String typeName);
+                          @Param("temperature") Double temperature);
 
     @Modifying
-    @Query("delete from Weather w where w.cityName= :cityName")
+    @Query("delete from Weather w where w.city.name = :cityName")
     void deleteByCityName(@Param("cityName") String cityName);
 
     @Modifying

@@ -1,8 +1,6 @@
 package com.gradle.boot.fintech.controllers;
 
-import com.gradle.boot.fintech.client.RestWeatherAPIClient;
 import com.gradle.boot.fintech.dto.WeatherDto;
-import com.gradle.boot.fintech.mappers.WeatherMapper;
 import com.gradle.boot.fintech.services.WeatherService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class WeatherController {
     private final WeatherService weatherService;
-    private final WeatherMapper weatherMapper;
 
     @Operation(
             summary = "Getting the temperature by city",
@@ -44,7 +41,7 @@ public class WeatherController {
     @PostMapping
     public ResponseEntity<String> addCity(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName,
                                           @RequestBody WeatherDto weatherDto) {
-        weatherService.save(cityName, weatherMapper.ToWeather(weatherDto));
+        weatherService.save(cityName, weatherDto);
         return new ResponseEntity<>("Weather record with a new city added", HttpStatus.CREATED);
     }
 
@@ -58,7 +55,7 @@ public class WeatherController {
     @PutMapping
     public ResponseEntity<String> updateWeather(@PathVariable(name = "city") @Parameter(description = "Name of city") String cityName,
                                                 @RequestBody WeatherDto weatherDto) {
-        weatherService.update(cityName, weatherMapper.ToWeather(weatherDto));
+        weatherService.update(cityName,weatherDto);
         return ResponseEntity.ok("The weather in the city has been updated");
     }
 

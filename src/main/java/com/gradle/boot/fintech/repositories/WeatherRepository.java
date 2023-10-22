@@ -12,7 +12,7 @@ public interface WeatherRepository {
 
     boolean existsByCityNameAndDate(String cityName, LocalDate date);
 
-    void updateByCityName(String cityName, LocalDate date, Double temperature, String typeName);
+    void updateByCityName(String cityName, LocalDate date, Double temperature);
 
     void deleteByCityName(String cityName);
 
