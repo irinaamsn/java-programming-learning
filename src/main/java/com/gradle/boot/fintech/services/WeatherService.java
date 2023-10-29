@@ -1,10 +1,10 @@
 package com.gradle.boot.fintech.services;
 
-import com.gradle.boot.fintech.models.Weather;
+import com.gradle.boot.fintech.dto.WeatherDto;
 
 public interface WeatherService {
-    void save(int regionCode, Weather weather);
-    void update(int regionCode, Weather weather);
-    Double getTempByRegionId(int regionCode);
-    void delete(int regionCode) ;
+    void save(String cityName, WeatherDto weatherDto);
+    void update(String cityName, WeatherDto weatherDto);
+    Double getTempByRegionId(String cityName);
+    void delete(String cityName);
 }

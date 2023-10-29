@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+   <changeSet id="20231020create-weather-index" author="irina.msn">
+       <createIndex tableName="Weather" indexName="idx_weather_on_temp">
+           <column name="temperature"/>
+       </createIndex>
+       <createIndex tableName="Weather" indexName="idx_weather_on_date_city">
+           <column name="date"/>
+           <column name="city_id"/>
+       </createIndex>
+   </changeSet>
+</databaseChangeLog>

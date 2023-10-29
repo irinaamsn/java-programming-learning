@@ -9,21 +9,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "Region")
-public class Region {
+@Table(name = "City")
+public class City {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="code",unique = true,nullable = false)
-    private int code;
-
     @Column(name="name",unique = true,nullable = false)
     private String name;
 
-    public Region(int code, String name) {
-        this.code = code;
+    public City(String name) {
         this.name = name;
     }
 }

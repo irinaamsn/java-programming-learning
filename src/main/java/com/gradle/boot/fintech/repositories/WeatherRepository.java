@@ -6,15 +6,15 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface WeatherRepository {
-    boolean existsByRegionCode(int regionCode);
+    boolean existsByCityName(String cityName);
 
-    Optional<Double> getTemperatureByRegionCodeAndDate(int regionCode);
+    Optional<Double> getTemperatureByCityNameAndDate(String cityName);
 
-    boolean existsByRegionCodeAndDate(int regionCode, LocalDate date);
+    boolean existsByCityNameAndDate(String cityName, LocalDate date);
 
-    void updateByRegionCode(int regionCode, LocalDate date, Double temperature, String typeName);
+    void updateByCityName(String cityName, LocalDate date, Double temperature);
 
-    void deleteByRegionCode(int regionCode);
+    void deleteByCityName(String cityName);
 
     void addWeather(Weather weather);
 }

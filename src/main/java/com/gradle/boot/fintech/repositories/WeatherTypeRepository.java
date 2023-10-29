@@ -6,4 +6,8 @@ import java.util.Optional;
 
 public interface WeatherTypeRepository {
     Optional<WeatherType> findByName(String name);
+
+    void addWeatherType(WeatherType weatherType);
+
+    boolean existsByName(String name);
 }
