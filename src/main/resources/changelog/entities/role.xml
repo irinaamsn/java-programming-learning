@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
-    <changeSet id="20231010create-guid-table" author="irina.msn">
-        <createTable tableName="Weather_Type">
-            <column name="id" type="bigint" autoIncrement="true">
+    <changeSet id="20231010create-role-table" author="irina.msn">
+        <createTable tableName="Role">
+            <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="name" type="varchar(255)">

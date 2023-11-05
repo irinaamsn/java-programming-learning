@@ -6,25 +6,20 @@
 
     <changeSet id="231010fill-region-data" author="irina.msn">
         <insert tableName="City">
-
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="Москва"/>
         </insert>
         <insert tableName="City">
-
-            <column name="name" value="Тверская область"/>
+            <column name="id" valueComputed="uuid()"/>
+            <column name="name" value="Тверь"/>
         </insert>
         <insert tableName="City">
-
-            <column name="name" value="Владимирская область"/>
+            <column name="id" valueComputed="uuid()"/>
+            <column name="name" value="Владимир"/>
         </insert>
         <insert tableName="City">
-
-            <column name="name" value="Томская область"/>
-        </insert>
-        <insert tableName="City">
-
-            <column name="name" value="Камчатский край"/>
+            <column name="id" valueComputed="uuid()"/>
+            <column name="name" value="Томск"/>
         </insert>
     </changeSet>
-
 </databaseChangeLog>

@@ -6,21 +6,27 @@
 
     <changeSet id="231010fill-guid-data" author="irina.msn">
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="Небольшой дождь"/>
         </insert>
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="снег"/>
         </insert>
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="солнце"/>
         </insert>
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="туман"/>
         </insert>
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="ветер"/>
         </insert>
         <insert tableName="Weather_Type">
+            <column name="id" valueComputed="uuid()"/>
             <column name="name" value="Переменная облачность"/>
         </insert>
     </changeSet>

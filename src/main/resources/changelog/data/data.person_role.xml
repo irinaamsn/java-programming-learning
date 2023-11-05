@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="231010fill-person-role-data" author="irina.msn">
+        <insert tableName="Person_Role">
+            <column name="person_id" valueNumeric="(SELECT id FROM Person WHERE username='admin')"/>
+            <column name="role_id" valueNumeric="(SELECT id FROM Role WHERE name='ROLE_ADMIN')"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
