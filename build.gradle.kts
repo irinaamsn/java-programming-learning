@@ -46,6 +46,10 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	//test
+	testImplementation("com.github.tomakehurst:wiremock:1.58")
+	testImplementation("org.testcontainers:testcontainers:1.18.3")
+	testImplementation("org.testcontainers:junit-jupiter:1.18.3")
+	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 tasks.register<Jar>("fatJar") {
