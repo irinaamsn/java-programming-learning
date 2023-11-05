@@ -3,7 +3,7 @@ package com.gradle.boot.fintech.services.impl.weatherapi;
 import com.gradle.boot.fintech.dto.WeatherDto;
 import com.gradle.boot.fintech.exceptions.NotCreatedException;
 import com.gradle.boot.fintech.mappers.WeatherMapper;
-import com.gradle.boot.fintech.mappers.WeatherMapperImpl;
+import com.gradle.boot.fintech.mappers.impl.WeatherMapperImpl;
 import com.gradle.boot.fintech.models.City;
 import com.gradle.boot.fintech.models.WeatherType;
 import com.gradle.boot.fintech.repositories.CityRepository;
@@ -41,7 +41,7 @@ class WeatherApiClientServiceTest {
 
     @BeforeEach
     void setUp() {
-       weatherService = new WeatherApiClientSpringServiceImpl(weatherRepository, weatherTypeRepository, cityRepository, weatherMapper);
+        weatherService = new WeatherApiClientSpringServiceImpl(weatherRepository, weatherTypeRepository, cityRepository, weatherMapper);
     }
 
     @Test
@@ -59,11 +59,12 @@ class WeatherApiClientServiceTest {
 
         weatherService.save(cityName, weatherDto);
 
-        verify(weatherRepository, times(1)).existsByCityName(anyString());
-        verify(weatherTypeRepository,never()).addWeatherType(any(WeatherType.class));
-        verify(weatherTypeRepository, times(1)).existsByName(anyString());
-        verify(cityRepository, times(1)).existsByName(anyString());
-        verify(cityRepository,never()).addCity(any(City.class));
+        verify(weatherMapper, times(1)).ToWeather(weatherDto);
+        verify(weatherRepository, times(1)).existsByCityName(cityName);
+        verify(weatherTypeRepository, never()).addWeatherType(any(WeatherType.class));
+        verify(weatherTypeRepository, times(1)).existsByName(weatherType);
+        verify(cityRepository, times(1)).existsByName(cityName);
+        verify(cityRepository, never()).addCity(any(City.class));
         verify(weatherRepository, times(1)).addWeather(any());
     }
 
@@ -82,10 +83,11 @@ class WeatherApiClientServiceTest {
 
         assertDoesNotThrow(() -> weatherService.save(cityName, weatherDto));
 
-        verify(weatherRepository, times(1)).existsByCityName(anyString());
+        verify(weatherMapper, times(1)).ToWeather(weatherDto);
+        verify(weatherRepository, times(1)).existsByCityName(cityName);
         verify(weatherTypeRepository, times(1)).addWeatherType(any(WeatherType.class));
-        verify(weatherTypeRepository, times(1)).existsByName(anyString());
-        verify(cityRepository, times(1)).existsByName(anyString());
+        verify(weatherTypeRepository, times(1)).existsByName(weatherType);
+        verify(cityRepository, times(1)).existsByName(cityName);
         verify(cityRepository, never()).addCity(any(City.class));
         verify(weatherRepository, times(1)).addWeather(any());
     }
@@ -101,11 +103,12 @@ class WeatherApiClientServiceTest {
 
         assertThrows(NotCreatedException.class, () -> weatherService.save(cityName, weatherDto));
 
-        verify(weatherRepository, times(1)).existsByCityName(anyString());
-        verify(weatherTypeRepository,never()).addWeatherType(any(WeatherType.class));
-        verify(weatherTypeRepository, never()).existsByName(anyString());
-        verify(cityRepository,never()).existsByName(anyString());
-        verify(cityRepository,never()).addCity(any(City.class));
+        verify(weatherMapper, times(1)).ToWeather(weatherDto);
+        verify(weatherRepository, times(1)).existsByCityName(cityName);
+        verify(weatherTypeRepository, never()).addWeatherType(any(WeatherType.class));
+        verify(weatherTypeRepository, never()).existsByName(weatherType);
+        verify(cityRepository, never()).existsByName(cityName);
+        verify(cityRepository, never()).addCity(any(City.class));
         verify(weatherRepository, never()).addWeather(any());
     }
 }
