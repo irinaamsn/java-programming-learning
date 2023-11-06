@@ -1,7 +1,7 @@
 package com.gradle.boot.fintech.services;
 
-import com.gradle.boot.fintech.models.Person;
+import com.gradle.boot.fintech.dto.PersonDto;
 
 public interface PersonService {
-    void registerUser(Person person);
+    void registerUser(PersonDto personDto);
 }
