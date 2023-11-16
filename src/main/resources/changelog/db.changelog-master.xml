@@ -5,8 +5,15 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <include file="changelog/entities/city.xml" />
     <include file="changelog/entities/guidTypesOfWeather.xml" />
+    <include file="changelog/entities/role.xml"/>
+    <include file="changelog/entities/person.xml"/>
+    <include file="changelog/entities/person_role.xml"/>
     <include file="changelog/entities/weather.xml" />
+    <includeAll path="changelog/modify"/>
     <include file="changelog/data/data.city.xml"/>
     <include file="changelog/data/data.guidTypesWeather.xml"/>
+    <include file="changelog/data/data.user-admin.xml"/>
+    <include file="changelog/data/data.role.xml"/>
+    <include file="changelog/data/data.person_role.xml"/>
     <include file="changelog/index/weather-index.xml"/>
 </databaseChangeLog>

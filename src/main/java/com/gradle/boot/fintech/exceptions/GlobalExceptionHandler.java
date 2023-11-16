@@ -1,16 +1,15 @@
 package com.gradle.boot.fintech.exceptions;
 
+import com.gradle.boot.fintech.errors.ErrorDtoResponse;
 import com.gradle.boot.fintech.exceptions.base.GlobalWeatherException;
 import com.gradle.boot.fintech.exceptions.base.WeatherApiException;
-import com.gradle.boot.fintech.errors.ErrorDtoResponse;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 
 @ControllerAdvice
@@ -28,7 +27,13 @@ public class GlobalExceptionHandler {
                 .status(e.getStatus())
                 .body(new ErrorDtoResponse(e.getStatus().value(), e.getErrorMessage()));
     }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDtoResponse> handleNotValidException(MethodArgumentNotValidException e) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDtoResponse(HttpStatus.BAD_REQUEST.value(),
+                        "Invalid data"));
+    }
     @ExceptionHandler(RequestNotPermitted.class)
     public ResponseEntity<ErrorDtoResponse> handleRequestNotPermittedException(RequestNotPermitted e) {
         return ResponseEntity
@@ -50,14 +55,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDtoResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage()));
-    }
-
-    @ExceptionHandler(DataAccessException.class)
-    public ResponseEntity<ErrorDtoResponse> handleSqlException(DataAccessException e) {
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorDtoResponse(HttpStatus.BAD_REQUEST.value(),
-                        "Invalid request"));
     }
 
     @ExceptionHandler(Throwable.class)

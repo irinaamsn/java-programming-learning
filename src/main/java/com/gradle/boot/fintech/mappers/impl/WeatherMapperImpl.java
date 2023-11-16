@@ -1,7 +1,8 @@
-package com.gradle.boot.fintech.mappers;
+package com.gradle.boot.fintech.mappers.impl;
 
 import com.gradle.boot.fintech.dto.WeatherApiResponseDto;
 import com.gradle.boot.fintech.dto.WeatherDto;
+import com.gradle.boot.fintech.mappers.WeatherMapper;
 import com.gradle.boot.fintech.models.Weather;
 import org.springframework.stereotype.Component;
 

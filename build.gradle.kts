@@ -35,10 +35,17 @@ dependencies {
 	implementation("org.liquibase:liquibase-core")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.1.4")
-	//mapstruct
-	implementation("org.mapstruct:mapstruct:1.5.5.Final")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
+	//validator
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+	//security
+	implementation("org.springframework.boot:spring-boot-starter-security")
+
+	implementation("org.mapstruct:mapstruct:1.5.5.Final")
+	implementation("org.jetbrains:annotations:24.0.0")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
+	//h2
 	runtimeOnly("com.h2database:h2")
 	//jackson
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
@@ -46,10 +53,11 @@ dependencies {
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	//test
-	testImplementation("com.github.tomakehurst:wiremock:1.58")
+	testImplementation("com.github.tomakehurst:wiremock:2.16.0")
 	testImplementation("org.testcontainers:testcontainers:1.18.3")
 	testImplementation("org.testcontainers:junit-jupiter:1.18.3")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
+	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 tasks.register<Jar>("fatJar") {
