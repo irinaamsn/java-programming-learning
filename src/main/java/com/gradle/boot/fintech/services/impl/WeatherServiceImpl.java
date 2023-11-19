@@ -70,9 +70,7 @@ public class WeatherServiceImpl implements WeatherService {
     public Double getTempByCityName(String cityName) {
         Optional<Weather> weather = weatherCache.getWeather(cityName);
         if (weather.isPresent()) {
-            var w = weather.get();
-            var res = weatherMapper.toWeatherDto(w);
-            return res.getTemperature();
+            return weatherMapper.toWeatherDto(weather.get()).getTemperature();
         } else {
             if (weatherRepository.existsByCityName(cityName)) {
                 weather = weatherRepository.getWeatherByCityName(cityName);
