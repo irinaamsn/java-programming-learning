@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Getter
@@ -18,25 +19,20 @@ public class LruCache<T> {
     private int size;
     private final Map<String, Node> cache;
     private final DoublyLinkedList queue;
-    private final ReadWriteLock lock;
+    private final ReentrantLock lock;
 
     public LruCache() {
-        lock = new ReentrantReadWriteLock();
+        lock = new ReentrantLock();
         cache = new ConcurrentHashMap<>();
         queue = new DoublyLinkedList();
     }
 
     public boolean containsKey(String key) {
-        lock.readLock().lock();
-        try {
-            return cache.containsKey(key);
-        } finally {
-            lock.readLock().unlock();
-        }
+        return cache.containsKey(key);
     }
 
     public T get(final String key) {
-        lock.readLock().lock();
+        lock.lock();
         try {
             Node node = cache.get(key);
             if (node == null) {
@@ -45,12 +41,12 @@ public class LruCache<T> {
             queue.modeNodeToFirst(node);
             return node.value;
         } finally {
-            lock.readLock().unlock();
+            lock.unlock();
         }
     }
 
     public void put(String key, T value) {
-        lock.writeLock().lock();
+        lock.lock();
         try {
             Node currentNode = cache.get(key);
             if (currentNode != null) {
@@ -71,7 +67,7 @@ public class LruCache<T> {
             cache.put(key, node);
             size++;
         } finally {
-            lock.writeLock().unlock();
+            lock.unlock();
         }
     }
 
