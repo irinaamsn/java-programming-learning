@@ -1,7 +1,8 @@
-package com.gradle.boot.fintech.services.impl.weatherapi.spring;
+package com.gradle.boot.fintech.services.impl.weatherapi;
 
 import com.gradle.boot.fintech.dto.WeatherDto;
 import com.gradle.boot.fintech.exceptions.NotCreatedException;
+import com.gradle.boot.fintech.exceptions.NotFoundException;
 import com.gradle.boot.fintech.mappers.WeatherMapper;
 import com.gradle.boot.fintech.models.City;
 import com.gradle.boot.fintech.models.Weather;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Profile("weatherApiClientSpringService")
@@ -29,24 +33,32 @@ public class WeatherApiClientSpringServiceImpl implements WeatherApiClientServic
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     public void save(String cityName, WeatherDto weatherDto) {
-        if (weatherRepository.existsByCityName(cityName))
-            throw new NotCreatedException(HttpStatus.BAD_REQUEST, "City already exists", System.currentTimeMillis());
-
         if (!weatherTypeRepository.existsByName(weatherDto.getTypeName()))
             weatherTypeRepository.addWeatherType(
                     new WeatherType(weatherDto.getTypeName())
             );
-        WeatherType weatherType = weatherTypeRepository.findByName(weatherDto.getTypeName()).get();
 
         if (!cityRepository.existsByName(weatherDto.getCityName()))
             cityRepository.addCity(
                     new City(weatherDto.getCityName())
             );
+
+        WeatherType weatherType = weatherTypeRepository.findByName(weatherDto.getTypeName()).get();
         City city = cityRepository.findByName(cityName).get();
 
-        Weather weather = weatherMapper.ToWeather(weatherDto);
+        Weather weather = weatherMapper.toWeather(weatherDto);
         weather.setWeatherType(weatherType);
         weather.setCity(city);
         weatherRepository.addWeather(weather);
+    }
+
+    @Override
+    public void deleteWeatherMoreBundle(List<Weather> list) {
+        weatherRepository.deleteListWeatherByCityName(list);
+    }
+
+    @Override
+    public List<Weather> getAllWeatherByCityName(String cityName) {
+        return weatherRepository.getAllWeatherByCityName(cityName);
     }
 }

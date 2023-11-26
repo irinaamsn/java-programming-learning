@@ -52,6 +52,15 @@ dependencies {
 	//lombok
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
+	// Logging
+	implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+	implementation("org.apache.logging.log4j:log4j-api:2.20.0")
+	implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
+	//kafka
+	implementation("org.springframework.kafka:spring-kafka")
+	//scheduler
+	implementation("net.javacrumbs.shedlock:shedlock-spring:4.27.0")
+	implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.27.0")
 	//test
 	testImplementation("com.github.tomakehurst:wiremock:2.16.0")
 	testImplementation("org.testcontainers:testcontainers:1.18.3")
